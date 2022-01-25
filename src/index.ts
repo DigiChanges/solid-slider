@@ -1,21 +1,20 @@
 import { onMount, onCleanup, createSignal } from "solid-js";
-import KeenSlider, { TOptionsEvents, TDetails } from "keen-slider";
+import KeenSlider, { KeenSliderInstance, KeenSliderPlugin, KeenSliderOptions, TrackDetails } from 'keen-slider';
 
-export type SliderOptions = TOptionsEvents;
-export type SliderDetails = TDetails;
+export type SliderOptions = KeenSliderOptions;
+export type SliderDetails = TrackDetails;
 
-declare module "solid-js" {
-  namespace JSX {
-    interface HTMLAttributes<T> extends HTMLAttributes<T> {
-      ["use:slider"]?: {};
-    }
-  }
-}
+// declare module "solid-js" {
+//   namespace JSX {
+//     // interface HTMLAttributes<T> extends HTMLAttributes<T> {
+//     //   ["use:slider"]?: {};
+//     // }
+//   }
+// }
 
 /**
  * Creates a slider powered by KeenSlider.
  *
- * @param {options} Options to initialize the slider with
  * @returns {Array} An array of useful utilities
  * @returns [create] Register and creation function to call on setup
  * @returns [current] Current slide number
@@ -32,24 +31,30 @@ declare module "solid-js" {
  * const [create] = createSlider();
  * <div use:slider>...</div>
  * ```
+ * @param options
+ * @param plugins
  */
+
+export type IAnimationSlide = { duration?: number, easing?: (t: number) => number };
+
 const createSlider = (
-  options: SliderOptions = {}
+  options: SliderOptions = {},
+  plugins: KeenSliderPlugin
 ): [
   (el: HTMLElement) => void,
   {
     current: () => number;
     next: () => void;
     prev: () => void;
-    moveTo: (id: number, duration?: number) => void;
-    resize: () => void;
-    refresh: () => void;
+    moveToIdx: (idx: number, absolute?: boolean, animation?: IAnimationSlide) => void;
+    // resize: () => void;
+    // refresh: () => void;
     details: () => SliderDetails;
-    slider: () => KeenSlider;
+    slider: () => KeenSliderInstance;
     destroy: () => void;
   }
 ] => {
-  let slider: KeenSlider;
+  let slider: KeenSliderInstance;
   const [current, setCurrent] = createSignal(0);
   const destroy = () => slider && slider.destroy();
   const create = (el: HTMLElement) => {
@@ -58,10 +63,11 @@ const createSlider = (
     opts.slides = el.childNodes;
     opts.slideChanged = instance => {
       options.slideChanged && options.slideChanged(instance);
-      setCurrent(instance.details().relativeSlide);
+      setCurrent(instance.track.details.rel);
     };
     el.classList.add("keen-slider");
-    onMount(() => (slider = new KeenSlider(el, opts)));
+    // @ts-ignore
+    onMount(() => (slider = new KeenSlider(el, opts, plugins)));
     onCleanup(destroy);
   };
   return [
@@ -70,10 +76,10 @@ const createSlider = (
       current,
       next: () => slider.next(),
       prev: () => slider.prev(),
-      moveTo: (id: number, duration = 250) => slider.moveToSlide(id, duration),
-      resize: () => slider.resize(),
-      refresh: () => slider.refresh(),
-      details: () => slider.details(),
+      moveToIdx: (idx: number, absolute = false, animation: IAnimationSlide = { duration: 250 }) => slider.moveToIdx(idx, absolute, animation),
+      // resize: () => slider.resize(),
+      // refresh: () => slider.refresh(),
+      details: () => slider.track.details,
       slider: () => slider,
       destroy
     }

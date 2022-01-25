@@ -1,13 +1,16 @@
 {
-  "name": "solid-slider",
+  "name": "@digichanges/solid-slider",
   "version": "1.0.3",
   "description": "A slider/carousel component for Solid powered by KeenSlider.",
-  "author": "David Di Biase",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/davedbase/solid-slider/issues"
+  "author": "David Di Biase & Nathan M. Russo",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
-  "homepage": "https://github.com/davedbase/solid-slider#readme",
+  "bugs": {
+    "url": "https://github.com/DigiChanges/solid-slider/issues"
+  },
+  "homepage": "https://github.com/DigiChanges/solid-slider#readme",
   "scripts": {
     "prebuild": "npm run clean",
     "clean": "rimraf dist/",
@@ -38,12 +41,14 @@
     "plugin"
   ],
   "peerDependencies": {
-    "solid-js": "^1.0.7"
+    "solid-js": "^1.3.3"
   },
   "dependencies": {
-    "keen-slider": "^5.5.1"
+    "keen-slider": "^6.6.3",
+    "solid-js": "^1.3.3"
   },
   "devDependencies": {
-    "prettier": "^2.4.1"
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.5"
   }
 }

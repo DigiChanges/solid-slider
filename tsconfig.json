@@ -6,6 +6,8 @@
     "target": "esnext",
     "newLine": "LF",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "jsxImportSource": "solid-js",
     "strict": true,
     "jsx": "preserve"
   },
