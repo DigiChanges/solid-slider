@@ -5,54 +5,43 @@ A carousel/slider implementation in TypeScript for Solid using KeenSlider. keen-
 ## Installation
 
 ```bash
-npm install solid-slider --save
-yarn add solid-slider ## or in yarn
+npm install @digichanges/solid-slider --save
+yarn add @digichanges/solid-slider ## or in yarn
 ```
 
 Add as a module:
 
 ```ts
-import "solid-slider/dist/slider.css";
-import createSlider from "solid-slider";
+import "@digichanges/solid-slider/dist/slider.css";
+import createSlider from "@digichanges/solid-slider";
 ```
 
 ## Demo
 
-You can find a functional demo of the slider with most features implemented here: https://codesandbox.io/s/solid-slider-j0x2g
+Here I add two examples.
+
+The first one is very simple while the second one makes use of the second parameter to add plugins to it, in this case the code is exactly the same as in the keen slider documentation. In addition, there is also the example of the dot that the only difference to the example of keen slider is that we use signal, that is why the syntax is different.
+
+
+Example 1: https://codesandbox.io/s/solid-slider-example1-bsuiz
+
+Example 2: https://codesandbox.io/s/solid-slider-forked-0l9oz
 
 ## Example
 
 The following is an example of how to create and then bind options using a directive.
 
-```ts
-const MyComponent = () => {
-  const options = { duration: 1000 };
-  const [slider, { current, next, prev, moveTo }] = createSlider(options);
-  return (
-    <div use:slider>
-      <div>Slide 1</div>
-      <div>Slide 2</div>
-      <div>Slide 3</div>
-    </div>
-  );
-};
-```
-
-or without a directive:
+Currently, keen slider since version 6 forces you to add keen-slider__slide in the html class. If we don't add this class it doesn't work.
 
 ```ts
 const MyComponent = () => {
-  let ref: HTMLElement;
-  const options = { duration: 1000 };
-  const [slider, { current, next, prev, moveTo }] = createSlider(options);
-  onMount(() => {
-    slider(ref);
-  });
+  const options = { loop: true };
+  const [createSlide, sliderSignal] = createSlider(options);
   return (
-    <div ref={ref}>
-      <div>Slide 1</div>
-      <div>Slide 2</div>
-      <div>Slide 3</div>
+    <div use:createSlide>
+      <div class="keen-slider__slide">Slide 1</div>
+      <div class="keen-slider__slide">Slide 2</div>
+      <div class="keen-slider__slide">Slide 3</div>
     </div>
   );
 };
@@ -61,7 +50,6 @@ const MyComponent = () => {
 ## Changelog
 
 - 1.0.0 - Initial release
-- 1.0.3 - Changed the exported API to be slightly more flexible.
 
 ## Keen Options API
 
