@@ -19,9 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-    
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     steps:
-      
+
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -32,3 +33,12 @@ jobs:
         with:
           disable-changelog: true
           node-module: true
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: npm build
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ env.NPM_TOKEN }}
