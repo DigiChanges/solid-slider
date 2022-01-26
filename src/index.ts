@@ -16,11 +16,11 @@ const createSlider = <
   plugins?: KeenSliderPlugin<O, P, H>[]
 ): [
   (el: HTMLElement) => void,
-  () => KeenSlider | undefined
+  () => KeenSliderInstance<O, P, H> | undefined
 ] => {
   let slider: KeenSliderInstance<O, P, H> | undefined;
   let currentOptions: KeenSliderOptions<O, P, H> | undefined = options;
-  let [sliderSignal, setSliderSignal] = createSignal<KeenSlider>();
+  let [sliderSignal, setSliderSignal] = createSignal<KeenSliderInstance<O, P, H> | undefined>();
 
   const destroy = () => slider && slider.destroy();
 
@@ -28,6 +28,7 @@ const createSlider = <
     el.classList.add("keen-slider");
     onMount(() => {
       slider = new KeenSlider<O, P, H>(el, currentOptions, plugins);
+      // @ts-ignore
       setSliderSignal(slider);
     });
     onCleanup(destroy);
