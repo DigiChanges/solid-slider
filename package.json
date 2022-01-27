@@ -1,6 +1,6 @@
 {
   "name": "@digichanges/solid-slider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A slider/carousel component for Solid powered by KeenSlider.",
   "author": "DigiChanges",
   "license": "MIT",
@@ -34,7 +34,8 @@
     "caroussel",
     "slideshow",
     "gallery",
-    "plugin"
+    "plugin",
+    "solid-slider"
   ],
   "peerDependencies": {
     "solid-js": "^1.3.0"
