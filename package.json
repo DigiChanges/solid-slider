@@ -1,6 +1,6 @@
 {
   "name": "@digichanges/solid-slider",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A slider/carousel component for Solid powered by KeenSlider.",
   "author": "DigiChanges",
   "license": "MIT",
