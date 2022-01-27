@@ -35,7 +35,8 @@
     "slideshow",
     "gallery",
     "plugin",
-    "solid-slider"
+    "solid-slider",
+    "digichanges"
   ],
   "peerDependencies": {
     "solid-js": "^1.3.0"
