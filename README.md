@@ -34,9 +34,11 @@ The following is an example of how to create and then bind options using a direc
 Currently, keen slider since version 6 forces you to add keen-slider__slide in the html class. If we don't add this class it doesn't work.
 
 ```ts
-const MyComponent = () => {
+const MySliderComponent = () => {
   const options = { loop: true };
+  
   const [createSlide, sliderSignal] = createSlider(options);
+  
   return (
     <div use:createSlide>
       <div class="keen-slider__slide">Slide 1</div>
@@ -55,6 +57,6 @@ const MyComponent = () => {
 
 You can set options to the slider via parameters. Note that there are other hooks available as well. Only a subset of useful methods are exposed via the primitive although you can access the slider instance as well from the exports to use the methods directly.
 
-- [Options](https://keen-slider.io/api/#options)
-- [Event Hooks](https://keen-slider.io/api/#event-hooks)
-- [Methods](https://keen-slider.io/api/#methods)
+- [Options](https://keen-slider.io/docs#options)
+- [Event Hooks](https://keen-slider.io/docs#event-hooks)
+- [Methods](https://keen-slider.io/docs#methods--properties)
